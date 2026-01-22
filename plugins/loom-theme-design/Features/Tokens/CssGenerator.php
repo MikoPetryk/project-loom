@@ -44,11 +44,12 @@ class CssGenerator {
     }
 
     /**
-     * Generate dark mode CSS (html.dark selector)
+     * Generate dark mode CSS (supports both html.dark class and data-theme attribute)
      */
     private static function generateDarkMode(): string {
-        $css = "html.dark {\n";
-        $css .= self::generateColorVariables(Colors::toDarkArray());
+        $darkVars = self::generateColorVariables(Colors::toDarkArray());
+        $css = "html.dark,\n[data-theme=\"dark\"] {\n";
+        $css .= $darkVars;
         $css .= "}\n";
         return $css;
     }

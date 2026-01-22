@@ -11,6 +11,8 @@
 
 namespace Loom\Core\Components;
 
+use Loom\Core\Tokens\Colors;
+
 // ════════════════════════════════════════════════════════════════════════════
 // TEXT FIELD - Text input
 // ════════════════════════════════════════════════════════════════════════════
@@ -51,10 +53,10 @@ class TextField extends Component {
             $labelMod = Modifier::new()
                 ->fontSize(14)
                 ->fontWeight(500)
-                ->color('var(--loom-text, #1a1a1a)');
+                ->color(Colors::text());
             $labelContent = esc_html($this->label);
             if ($this->required) {
-                $labelContent .= $this->tag('span', ' *', Modifier::new()->color('var(--loom-error, #ef4444)'));
+                $labelContent .= $this->tag('span', ' *', Modifier::new()->color(Colors::error()));
             }
             $content .= $this->tag('label', $labelContent, $labelMod, ['for' => $fieldId]);
         }
@@ -65,14 +67,14 @@ class TextField extends Component {
             ->rounded(8)
             ->fontSize(16)
             ->border($this->error
-                ? '2px solid var(--loom-error, #ef4444)'
-                : '1px solid var(--loom-border, #e2e8f0)'
+                ? '2px solid ' . Colors::error()
+                : '1px solid ' . Colors::border()
             )
             ->style('outline', 'none')
             ->transition('border-color 0.2s ease');
 
         if ($this->disabled) {
-            $inputMod->background('var(--loom-background, #f8fafc)')
+            $inputMod->background(Colors::background())
                 ->cursor('not-allowed')
                 ->opacity(0.7);
         }
@@ -112,10 +114,10 @@ class TextField extends Component {
 
         // Helper/Error text with ID for aria-describedby
         if ($this->error) {
-            $errorMod = Modifier::new()->fontSize(12)->color('var(--loom-error, #ef4444)');
+            $errorMod = Modifier::new()->fontSize(12)->color(Colors::error());
             $content .= $this->tag('span', esc_html($this->error), $errorMod, ['id' => $helperId, 'role' => 'alert']);
         } elseif ($this->helper) {
-            $helperMod = Modifier::new()->fontSize(12)->color('var(--loom-text-secondary, #64748b)');
+            $helperMod = Modifier::new()->fontSize(12)->color(Colors::textSecondary());
             $content .= $this->tag('span', esc_html($this->helper), $helperMod, ['id' => $helperId]);
         }
 
@@ -163,10 +165,10 @@ class TextArea extends Component {
             $labelMod = Modifier::new()
                 ->fontSize(14)
                 ->fontWeight(500)
-                ->color('var(--loom-text, #1a1a1a)');
+                ->color(Colors::text());
             $labelContent = esc_html($this->label);
             if ($this->required) {
-                $labelContent .= $this->tag('span', ' *', Modifier::new()->color('var(--loom-error, #ef4444)'));
+                $labelContent .= $this->tag('span', ' *', Modifier::new()->color(Colors::error()));
             }
             $content .= $this->tag('label', $labelContent, $labelMod, ['for' => $fieldId]);
         }
@@ -177,15 +179,15 @@ class TextArea extends Component {
             ->rounded(8)
             ->fontSize(16)
             ->border($this->error
-                ? '2px solid var(--loom-error, #ef4444)'
-                : '1px solid var(--loom-border, #e2e8f0)'
+                ? '2px solid ' . Colors::error()
+                : '1px solid ' . Colors::border()
             )
             ->style('outline', 'none')
             ->style('resize', 'vertical')
             ->style('font-family', 'inherit');
 
         if ($this->disabled) {
-            $textareaMod->background('var(--loom-background, #f8fafc)')->opacity(0.7);
+            $textareaMod->background(Colors::background())->opacity(0.7);
         }
 
         $attrs = [
@@ -212,10 +214,10 @@ class TextArea extends Component {
 
         // Helper/Error text with ID for aria-describedby
         if ($this->error) {
-            $errorMod = Modifier::new()->fontSize(12)->color('var(--loom-error, #ef4444)');
+            $errorMod = Modifier::new()->fontSize(12)->color(Colors::error());
             $content .= $this->tag('span', esc_html($this->error), $errorMod, ['id' => $helperId, 'role' => 'alert']);
         } elseif ($this->helper) {
-            $helperMod = Modifier::new()->fontSize(12)->color('var(--loom-text-secondary, #64748b)');
+            $helperMod = Modifier::new()->fontSize(12)->color(Colors::textSecondary());
             $content .= $this->tag('span', esc_html($this->helper), $helperMod, ['id' => $helperId]);
         }
 
@@ -236,10 +238,11 @@ class Checkbox extends Component {
         private ?string $value = null,
         private bool $disabled = false,
         private ?string $onChange = null,
-        private string $color = 'var(--loom-primary, #6366f1)',
+        private ?string $color = null,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
     }
 
     public function render(): string {
@@ -269,18 +272,20 @@ class Checkbox extends Component {
         $input = $this->tag('input', '', $inputMod, $inputAttrs);
 
         // Custom checkbox visual
+        $borderColor = $this->checked ? $this->color : Colors::border();
         $checkMod = Modifier::new()
             ->size(20)
             ->rounded(4)
-            ->border($this->checked ? "2px solid {$this->color}" : '2px solid var(--loom-border, #e2e8f0)')
+            ->border("2px solid {$borderColor}")
             ->background($this->checked ? $this->color : 'transparent')
             ->flex()
             ->alignItems('center')
             ->justifyContent('center')
             ->transition('all 0.2s ease');
 
+        $onPrimaryColor = Colors::onPrimary();
         $checkIcon = $this->checked
-            ? '<svg width="14" height="14" fill="white" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>'
+            ? '<svg width="14" height="14" fill="' . $onPrimaryColor . '" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>'
             : '';
         $check = $this->tag('span', $checkIcon, $checkMod);
 
@@ -308,10 +313,11 @@ class Switch_ extends Component {
         private ?string $id = null,
         private bool $disabled = false,
         private ?string $onChange = null,
-        private string $color = 'var(--loom-primary, #6366f1)',
+        private ?string $color = null,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
     }
 
     private function injectStyles(): string {
@@ -350,7 +356,7 @@ class Switch_ extends Component {
             ->class($wrapperClasses);
 
         // Custom color via CSS variable
-        if ($this->color !== 'var(--loom-primary, #6366f1)') {
+        if ($this->color !== Colors::primary()) {
             $wrapperMod->style('--loom-switch-color', $this->color);
         }
 
@@ -413,10 +419,11 @@ class Slider extends Component {
         private bool $disabled = false,
         private bool $showValue = false,
         private ?string $onChange = null,
-        private string $color = 'var(--loom-primary, #6366f1)',
+        private ?string $color = null,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
     }
 
     public function render(): string {
@@ -440,10 +447,12 @@ class Slider extends Component {
             $labelContent = '';
 
             if ($this->label) {
-                $labelContent .= '<span style="font-size:14px;font-weight:500;color:var(--loom-text,#1a1a1a)">' . esc_html($this->label) . '</span>';
+                $textColor = Colors::text();
+                $labelContent .= '<span style="font-size:14px;font-weight:500;color:' . $textColor . '">' . esc_html($this->label) . '</span>';
             }
             if ($this->showValue) {
-                $labelContent .= '<span id="' . esc_attr($fieldId) . '-value" style="font-size:14px;color:var(--loom-text-secondary,#64748b)">' . esc_html((string) $this->value) . '</span>';
+                $secondaryColor = Colors::textSecondary();
+                $labelContent .= '<span id="' . esc_attr($fieldId) . '-value" style="font-size:14px;color:' . $secondaryColor . '">' . esc_html((string) $this->value) . '</span>';
             }
 
             if ($labelContent) {

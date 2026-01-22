@@ -46,9 +46,10 @@ add_action('plugins_loaded', function () {
     $tokens = get_option('loom_theme_tokens', array());
     \Loom\ThemeManager\Features\Tokens\TokenRegistry::load($tokens);
 
-    // CSS output
-    add_action('wp_head', array('\Loom\ThemeManager\Features\Tokens\CssGenerator', 'output'), 1);
-    add_action('admin_head', array('\Loom\ThemeManager\Features\Tokens\CssGenerator', 'output'), 1);
+    // CSS output - priority 99 to load AFTER enqueued stylesheets (which load at priority 8)
+    // This ensures Theme Design tokens override Loom Core defaults
+    add_action('wp_head', array('\Loom\ThemeManager\Features\Tokens\CssGenerator', 'output'), 99);
+    add_action('admin_head', array('\Loom\ThemeManager\Features\Tokens\CssGenerator', 'output'), 99);
 
     // Frontend theme switcher script
     add_action('wp_enqueue_scripts', function () {

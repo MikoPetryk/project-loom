@@ -11,6 +11,8 @@
 
 namespace Loom\Core\Components;
 
+use Loom\Core\Tokens\Colors;
+
 // ════════════════════════════════════════════════════════════════════════════
 // SURFACE - Basic material surface
 // ════════════════════════════════════════════════════════════════════════════
@@ -22,12 +24,13 @@ class Surface extends Component {
     public function __construct(
         ?\Closure $content = null,
         private int $elevation = 0,
-        private string $color = 'var(--loom-surface, #ffffff)',
+        private ?string $color = null,
         private int|string $rounded = 0,
         ?Modifier $modifier = null
     ) {
         $this->content = $content;
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::surface();
     }
 
     public function render(): string {
@@ -65,7 +68,7 @@ class Card extends Component {
 
     public function render(): string {
         $mod = ($this->modifier ?? Modifier::new())
-            ->background('var(--loom-surface, #ffffff)')
+            ->background(Colors::surface())
             ->rounded($this->rounded)
             ->padding($this->padding)
             ->shadow($this->elevation)
@@ -105,11 +108,11 @@ class Dialog extends Component {
             return '';
         }
 
-        // Backdrop
+        // Backdrop - scrim overlay
         $backdropMod = Modifier::new()
             ->fixed()
             ->inset(0)
-            ->background('rgba(0, 0, 0, 0.5)')
+            ->background('var(--loom-scrim-alpha, rgba(0, 0, 0, 0.5))')
             ->flex()
             ->alignItems('center')
             ->justifyContent('center')
@@ -122,7 +125,7 @@ class Dialog extends Component {
 
         // Dialog
         $dialogMod = ($this->modifier ?? Modifier::new())
-            ->background('var(--loom-surface, #ffffff)')
+            ->background(Colors::surface())
             ->rounded(16)
             ->padding(24)
             ->maxWidth($this->maxWidth)

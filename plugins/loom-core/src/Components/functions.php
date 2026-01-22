@@ -65,7 +65,7 @@ function Spacer(
 
 function Divider(
     bool $vertical = false,
-    string $color = 'var(--loom-border, #e2e8f0)',
+    ?string $color = null,
     int|string $thickness = 1,
     ?Modifier $modifier = null
 ): void {
@@ -93,7 +93,7 @@ function Button(
     ?string $href = null,
     ?string $icon = null,
     bool $disabled = false,
-    string $color = 'var(--loom-primary, #6366f1)',
+    ?string $color = null,
     ?Modifier $modifier = null
 ): void {
     echo new \Loom\Core\Components\Button($text, $style, $onClick, $href, $icon, $disabled, $color, $modifier);
@@ -105,7 +105,7 @@ function IconButton(
     ?string $href = null,
     int $size = 40,
     bool $disabled = false,
-    string $color = 'var(--loom-text, #1a1a1a)',
+    ?string $color = null,
     ?Modifier $modifier = null
 ): void {
     echo new \Loom\Core\Components\IconButton($icon, $onClick, $href, $size, $disabled, $color, $modifier);
@@ -129,7 +129,7 @@ function Image(
 function Surface(
     ?\Closure $content = null,
     int $elevation = 0,
-    string $color = 'var(--loom-surface, #ffffff)',
+    ?string $color = null,
     int|string $rounded = 0,
     ?Modifier $modifier = null
 ): void {
@@ -185,8 +185,8 @@ function Alert(
 
 function Badge(
     string|int $content,
-    string $color = 'var(--loom-primary, #6366f1)',
-    string $textColor = 'white',
+    ?string $color = null,
+    ?string $textColor = null,
     bool $dot = false,
     ?Modifier $modifier = null
 ): void {
@@ -196,7 +196,7 @@ function Badge(
 function Progress(
     ?int $value = null,
     int $max = 100,
-    string $color = 'var(--loom-primary, #6366f1)',
+    ?string $color = null,
     int|string $height = 4,
     bool $circular = false,
     int $size = 40,
@@ -212,7 +212,7 @@ function Chip(
     ?string $onClick = null,
     ?string $onDelete = null,
     ?string $icon = null,
-    string $color = 'var(--loom-primary, #6366f1)',
+    ?string $color = null,
     ?Modifier $modifier = null
 ): void {
     echo new \Loom\Core\Components\Chip($label, $selected, $onClick, $onDelete, $icon, $color, $modifier);
@@ -272,7 +272,7 @@ function Checkbox(
     ?string $value = null,
     bool $disabled = false,
     ?string $onChange = null,
-    string $color = 'var(--loom-primary, #6366f1)',
+    ?string $color = null,
     ?Modifier $modifier = null
 ): void {
     echo new \Loom\Core\Components\Checkbox($label, $checked, $name, $value, $disabled, $onChange, $color, $modifier);
@@ -285,7 +285,7 @@ function Switch_(
     ?string $id = null,
     bool $disabled = false,
     ?string $onChange = null,
-    string $color = 'var(--loom-primary, #6366f1)',
+    ?string $color = null,
     ?Modifier $modifier = null
 ): void {
     echo new \Loom\Core\Components\Switch_($label, $checked, $name, $id, $disabled, $onChange, $color, $modifier);
@@ -302,7 +302,7 @@ function Slider(
     bool $disabled = false,
     bool $showValue = false,
     ?string $onChange = null,
-    string $color = 'var(--loom-primary, #6366f1)',
+    ?string $color = null,
     ?Modifier $modifier = null
 ): void {
     echo new \Loom\Core\Components\Slider($value, $min, $max, $step, $label, $name, $id, $disabled, $showValue, $onChange, $color, $modifier);
