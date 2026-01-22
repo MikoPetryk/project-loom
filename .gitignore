@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+
+# Composer
+composer.lock
+
+# Package
+*.zip
+*.tar.gz

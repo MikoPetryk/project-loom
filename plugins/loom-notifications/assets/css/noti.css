@@ -1,0 +1,193 @@
+/**
+ * Noti - Notification Styles
+ *
+ * Uses Loom design tokens (CSS variables) when available.
+ * Falls back gracefully when Theme Manager is not active.
+ */
+
+/* Loom Snackbar animations */
+@keyframes loom-snackbar-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes loom-snackbar-out {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+}
+
+/* Container positioning */
+.noti-container {
+    position: fixed;
+    z-index: 999999;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    max-width: 400px;
+}
+
+.noti-container.top-right { top: 0; right: 0; align-items: flex-end; }
+.noti-container.top-left  { top: 0; left: 0; align-items: flex-start; }
+.noti-container.top-center { top: 0; left: 50%; transform: translateX(-50%); align-items: center; }
+.noti-container.bottom-right { bottom: 0; right: 0; align-items: flex-end; }
+.noti-container.bottom-left  { bottom: 0; left: 0; align-items: flex-start; }
+.noti-container.bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); align-items: center; }
+
+/* Toast base */
+.noti-toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 280px;
+    max-width: 400px;
+    padding: 14px 16px;
+    border-radius: var(--loom-rounded-md, 8px);
+    color: #fff;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2),
+                0 6px 10px 0 rgba(0,0,0,0.14),
+                0 1px 18px 0 rgba(0,0,0,0.12);
+    font-family: var(--loom-font-body, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(100%) scale(0.9);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Show animation */
+.noti-toast.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Top position animation */
+.noti-container.top-right .noti-toast,
+.noti-container.top-left .noti-toast,
+.noti-container.top-center .noti-toast {
+    transform: translateY(-100%) scale(0.9);
+}
+
+.noti-container.top-right .noti-toast.show,
+.noti-container.top-left .noti-toast.show,
+.noti-container.top-center .noti-toast.show {
+    transform: translateY(0) scale(1);
+}
+
+/* Icon */
+.noti-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.noti-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Message */
+.noti-msg {
+    flex: 1;
+    word-break: break-word;
+}
+
+/* Actions container */
+.noti-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 8px;
+}
+
+/* Action button */
+.noti-action-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 6px 8px;
+    margin: -6px -8px;
+    border-radius: var(--loom-rounded-sm, 4px);
+    cursor: pointer;
+    transition: background 0.15s ease;
+    opacity: 0.95;
+}
+
+.noti-action-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 1;
+}
+
+/* Close button */
+.noti-close {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: 20px;
+    padding: 4px;
+    margin: -4px;
+    margin-left: 4px;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noti-close:hover {
+    opacity: 1;
+}
+
+/* Progress bar */
+.noti-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 0 0 var(--loom-rounded-md, 8px) var(--loom-rounded-md, 8px);
+    overflow: hidden;
+}
+
+.noti-progress-fill {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    transition: width 0.3s ease;
+}
+
+/* For progress type, add relative positioning */
+.noti-toast:has(.noti-progress-bar),
+.noti-toast.noti-progress {
+    position: relative;
+    padding-bottom: 17px;
+}
+
+/* Type-specific adjustments */
+.noti-toast.noti-warning {
+    color: #000;
+}
+
+.noti-toast.noti-log {
+    color: var(--loom-text, #1a1a1a);
+}

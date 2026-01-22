@@ -1,0 +1,180 @@
+/**
+ * Loom Core CSS
+ *
+ * Minimal base styles and utilities for Loom components.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CSS VARIABLES (Design Tokens)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    /* Colors */
+    --loom-primary: #336659;
+    --loom-primary-dark: #2a544a;
+    --loom-primary-light: #e8f0ee;
+    --loom-primary-lighter: #d4e4e0;
+    --loom-on-primary: #ffffff;
+    --loom-secondary: #4A90A4;
+    --loom-surface: #ffffff;
+    --loom-surface-variant: #f5f5f5;
+    --loom-background: #fafafa;
+    --loom-error: #dc3545;
+    --loom-error-dark: #c82333;
+    --loom-success: #28a745;
+    --loom-warning: #ffc107;
+    --loom-on-surface: #1a1a1a;
+    --loom-on-surface-variant: #6c757d;
+    --loom-text: #1a1a1a;
+    --loom-border: #e0e0e0;
+    --loom-info: #17a2b8;
+
+    /* Alert containers */
+    --loom-success-container: #d4edda;
+    --loom-on-success-container: #155724;
+    --loom-warning-container: #fff3cd;
+    --loom-on-warning-container: #856404;
+    --loom-error-container: #f8d7da;
+    --loom-on-error-container: #721c24;
+    --loom-info-container: #d1ecf1;
+    --loom-on-info-container: #0c5460;
+
+    /* Spacing */
+    --loom-spacing-xs: 4px;
+    --loom-spacing-sm: 8px;
+    --loom-spacing-md: 16px;
+    --loom-spacing-lg: 24px;
+    --loom-spacing-xl: 32px;
+    --loom-spacing-xxl: 48px;
+
+    /* Typography */
+    --loom-font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --loom-font-size-sm: 14px;
+    --loom-font-size-base: 16px;
+    --loom-font-size-lg: 18px;
+    --loom-font-size-xl: 24px;
+    --loom-font-size-2xl: 32px;
+
+    /* Shapes */
+    --loom-radius-sm: 4px;
+    --loom-radius-md: 8px;
+    --loom-radius-lg: 12px;
+    --loom-radius-full: 9999px;
+
+    /* Shadows */
+    --loom-shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    --loom-shadow-md: 0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12);
+    --loom-shadow-lg: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.10);
+
+    /* Transitions */
+    --loom-transition: all 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESET
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOADING STATE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.loom-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loom-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: loom-spin 0.8s linear infinite;
+}
+
+@keyframes loom-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MODAL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.loom-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+.loom-modal.loom-modal-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loom-modal-content {
+    background: var(--loom-surface);
+    border-radius: var(--loom-radius-lg);
+    box-shadow: var(--loom-shadow-lg);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.loom-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.loom-hidden {
+    display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOCUS STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:focus-visible {
+    outline: 2px solid var(--loom-primary);
+    outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTON BASE (for generated buttons)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
