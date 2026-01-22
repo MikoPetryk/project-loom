@@ -26,8 +26,13 @@
     --loom-on-surface: #1a1a1a;
     --loom-on-surface-variant: #6c757d;
     --loom-text: #1a1a1a;
+    --loom-text-secondary: #6c757d;
     --loom-border: #e0e0e0;
     --loom-info: #17a2b8;
+
+    /* Inverse (for tooltips, snackbars) */
+    --loom-inverse-surface: #1a1a1a;
+    --loom-inverse-on-surface: #ffffff;
 
     /* Alert containers */
     --loom-success-container: #d4edda;
@@ -68,6 +73,67 @@
 
     /* Transitions */
     --loom-transition: all 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK MODE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html.dark,
+[data-theme="dark"] {
+    /* Colors */
+    --loom-primary: #4a9e8c;
+    --loom-primary-dark: #3d8574;
+    --loom-primary-light: #1a2f2a;
+    --loom-primary-lighter: #243d36;
+    --loom-on-primary: #ffffff;
+    --loom-secondary: #5aa8bd;
+    --loom-surface: #1e1e1e;
+    --loom-surface-variant: #2d2d2d;
+    --loom-background: #121212;
+    --loom-error: #f5565e;
+    --loom-error-dark: #e04048;
+    --loom-success: #4caf50;
+    --loom-warning: #ffca28;
+    --loom-on-surface: #e0e0e0;
+    --loom-on-surface-variant: #a0a0a0;
+    --loom-text: #e0e0e0;
+    --loom-text-secondary: #a0a0a0;
+    --loom-border: #3d3d3d;
+    --loom-info: #29b6f6;
+
+    /* Alert containers */
+    --loom-success-container: #1b3d1e;
+    --loom-on-success-container: #81c784;
+    --loom-warning-container: #3d3520;
+    --loom-on-warning-container: #ffd54f;
+    --loom-error-container: #3d1f22;
+    --loom-on-error-container: #ef9a9a;
+    --loom-info-container: #1a3340;
+    --loom-on-info-container: #81d4fa;
+
+    /* Inverse (for tooltips, snackbars) */
+    --loom-inverse-surface: #e0e0e0;
+    --loom-inverse-on-surface: #1e1e1e;
+
+    /* Shadows - darker for dark mode */
+    --loom-shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.5);
+    --loom-shadow-md: 0 3px 6px rgba(0,0,0,0.45), 0 2px 4px rgba(0,0,0,0.4);
+    --loom-shadow-lg: 0 10px 20px rgba(0,0,0,0.5), 0 3px 6px rgba(0,0,0,0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME TRANSITIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    background-color: var(--loom-background);
+    color: var(--loom-text);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

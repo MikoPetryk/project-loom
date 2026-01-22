@@ -11,6 +11,8 @@
 
 namespace Loom\Core\Components;
 
+use Loom\Core\Tokens\Colors;
+
 // ════════════════════════════════════════════════════════════════════════════
 // ALERT TYPE - Enum for alert variants
 // ════════════════════════════════════════════════════════════════════════════
@@ -86,11 +88,28 @@ class Alert extends Component {
     }
 
     private function getColors(): array {
+        // Returns [background, text, border] using CSS variables with fallbacks
         return match($this->type) {
-            AlertType::Info => ['#eff6ff', '#1e40af', '#bfdbfe'],
-            AlertType::Success => ['#f0fdf4', '#166534', '#bbf7d0'],
-            AlertType::Warning => ['#fffbeb', '#92400e', '#fde68a'],
-            AlertType::Error => ['#fef2f2', '#991b1b', '#fecaca'],
+            AlertType::Info => [
+                'var(--loom-info-container, #eff6ff)',
+                'var(--loom-on-info-container, #1e40af)',
+                'var(--loom-info-border, #bfdbfe)'
+            ],
+            AlertType::Success => [
+                'var(--loom-success-container, #f0fdf4)',
+                'var(--loom-on-success-container, #166534)',
+                'var(--loom-success-border, #bbf7d0)'
+            ],
+            AlertType::Warning => [
+                'var(--loom-warning-container, #fffbeb)',
+                'var(--loom-on-warning-container, #92400e)',
+                'var(--loom-warning-border, #fde68a)'
+            ],
+            AlertType::Error => [
+                Colors::errorContainer(),
+                Colors::onErrorContainer(),
+                'var(--loom-error-border, #fecaca)'
+            ],
         };
     }
 
@@ -112,12 +131,14 @@ class Badge extends Component {
 
     public function __construct(
         private string|int $content,
-        private string $color = 'var(--loom-primary, #6366f1)',
-        private string $textColor = 'white',
+        private ?string $color = null,
+        private ?string $textColor = null,
         private bool $dot = false,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
+        $this->textColor = $textColor ?? Colors::onPrimary();
     }
 
     public function render(): string {
@@ -152,7 +173,7 @@ class Progress extends Component {
     public function __construct(
         private ?int $value = null,             // null = indeterminate
         private int $max = 100,
-        private string $color = 'var(--loom-primary, #6366f1)',
+        private ?string $color = null,
         private int|string $height = 4,
         private bool $circular = false,
         private int $size = 40,
@@ -160,6 +181,7 @@ class Progress extends Component {
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
     }
 
     public function render(): string {
@@ -200,7 +222,7 @@ class Progress extends Component {
             ->fillMaxWidth()
             ->height($this->height)
             ->rounded($this->height)
-            ->background('var(--loom-border, #e2e8f0)')
+            ->background(Colors::border())
             ->style('overflow', 'hidden');
 
         $fillPercent = $this->value !== null
@@ -240,6 +262,7 @@ class Progress extends Component {
             ? 'animation="loom-progress-spin 1s linear infinite"'
             : '';
 
+        $borderColor = Colors::border();
         $svg = <<<SVG
 <svg width="{$this->size}" height="{$this->size}" viewBox="0 0 {$this->size} {$this->size}" {$animation}>
     <circle
@@ -247,7 +270,7 @@ class Progress extends Component {
         cy="{($this->size / 2)}"
         r="{$radius}"
         fill="none"
-        stroke="var(--loom-border, #e2e8f0)"
+        stroke="{$borderColor}"
         stroke-width="{$strokeWidth}"
     />
     <circle
@@ -281,10 +304,11 @@ class Chip extends Component {
         private ?string $onClick = null,
         private ?string $onDelete = null,
         private ?string $icon = null,
-        private string $color = 'var(--loom-primary, #6366f1)',
+        private ?string $color = null,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
     }
 
     public function render(): string {
@@ -299,11 +323,11 @@ class Chip extends Component {
             ->transition('all 0.2s ease');
 
         if ($this->selected) {
-            $mod->background($this->color)->color('white');
+            $mod->background($this->color)->color(Colors::onPrimary());
         } else {
             $mod->background('transparent')
-                ->border("1px solid var(--loom-border, #e2e8f0)")
-                ->color('var(--loom-text, #1a1a1a)');
+                ->border("1px solid " . Colors::border())
+                ->color(Colors::text());
         }
 
         if ($this->onClick) {
@@ -366,8 +390,8 @@ class Tooltip extends Component {
 
         $tooltipMod = Modifier::new()
             ->absolute()
-            ->background('var(--loom-text, #1a1a1a)')
-            ->color('white')
+            ->background(Colors::inverseSurface())
+            ->color(Colors::inverseOnSurface())
             ->padding(horizontal: 8, vertical: 4)
             ->rounded(4)
             ->fontSize(12)

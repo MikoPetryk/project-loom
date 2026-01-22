@@ -137,14 +137,14 @@ class Bootstrap {
     background-color: rgba(0, 0, 0, 0.04);
 }
 .loom-focusable:focus {
-    outline: 2px solid var(--loom-primary, #6366f1);
+    outline: 2px solid var(--loom-primary);
     outline-offset: 2px;
 }
 .loom-focusable:focus:not(:focus-visible) {
     outline: none;
 }
 .loom-focusable:focus-visible {
-    outline: 2px solid var(--loom-primary, #6366f1);
+    outline: 2px solid var(--loom-primary);
     outline-offset: 2px;
 }
 
@@ -161,27 +161,27 @@ class Bootstrap {
 /* Slider styling */
 .loom-slider::-webkit-slider-runnable-track {
     height: 4px;
-    background: var(--loom-border, #e2e8f0);
+    background: var(--loom-border);
     border-radius: 2px;
 }
 .loom-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 16px;
     height: 16px;
-    background: var(--loom-primary, #6366f1);
+    background: var(--loom-primary);
     border-radius: 50%;
     margin-top: -6px;
     cursor: pointer;
 }
 .loom-slider::-moz-range-track {
     height: 4px;
-    background: var(--loom-border, #e2e8f0);
+    background: var(--loom-border);
     border-radius: 2px;
 }
 .loom-slider::-moz-range-thumb {
     width: 16px;
     height: 16px;
-    background: var(--loom-primary, #6366f1);
+    background: var(--loom-primary);
     border-radius: 50%;
     border: none;
     cursor: pointer;

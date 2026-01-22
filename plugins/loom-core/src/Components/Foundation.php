@@ -12,6 +12,8 @@
 
 namespace Loom\Core\Components;
 
+use Loom\Core\Tokens\Colors;
+
 // ════════════════════════════════════════════════════════════════════════════
 // COLUMN - Vertical layout
 // ════════════════════════════════════════════════════════════════════════════
@@ -215,11 +217,12 @@ class Divider extends Component {
 
     public function __construct(
         private bool $vertical = false,
-        private string $color = 'var(--loom-border, #e2e8f0)',
+        private ?string $color = null,
         private int|string $thickness = 1,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::border();
     }
 
     public function render(): string {

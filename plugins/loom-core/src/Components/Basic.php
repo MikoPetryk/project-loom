@@ -11,6 +11,8 @@
 
 namespace Loom\Core\Components;
 
+use Loom\Core\Tokens\Colors;
+
 // ════════════════════════════════════════════════════════════════════════════
 // TEXT STYLE - Enum for typography presets
 // ════════════════════════════════════════════════════════════════════════════
@@ -124,10 +126,11 @@ class Button extends Component {
         private ?string $href = null,
         private ?string $icon = null,
         private bool $disabled = false,
-        private string $color = 'var(--loom-primary, #6366f1)',
+        private ?string $color = null,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::primary();
     }
 
     public function render(): string {
@@ -184,7 +187,7 @@ class Button extends Component {
         return match($this->style) {
             ButtonStyle::Filled => $mod
                 ->background($this->color)
-                ->color('white'),
+                ->color(Colors::onPrimary()),
 
             ButtonStyle::Outlined => $mod
                 ->background('transparent')
@@ -215,10 +218,11 @@ class IconButton extends Component {
         private ?string $href = null,
         private int $size = 40,
         private bool $disabled = false,
-        private string $color = 'var(--loom-text, #1a1a1a)',
+        private ?string $color = null,
         ?Modifier $modifier = null
     ) {
         $this->modifier = $modifier;
+        $this->color = $color ?? Colors::text();
     }
 
     public function render(): string {
